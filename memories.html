@@ -23,6 +23,9 @@ min-height:100dvh;
 background:linear-gradient(-45deg,#020024,#090979,#4b0082,#7b2cbf,#1e3c72);
 background-size:400% 400%;
 animation:gradientMove 12s ease infinite;
+
+user-select:none;
+-webkit-user-select:none;
 }
 
 @keyframes gradientMove{
@@ -50,9 +53,7 @@ box-shadow:0 0 10px rgba(150,100,255,0.6);
 z-index:1000;
 }
 
-.personal-btn:hover{
-transform:scale(1.05);
-}
+/* titles */
 
 h1{
 margin-top:25px;
@@ -65,28 +66,31 @@ margin-top:30px;
 font-size:clamp(20px,6vw,30px);
 }
 
-/* gallery */
+/* gallery grid */
 
 .gallery{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
 gap:20px;
 padding:20px;
+width:90%;
+max-width:1000px;
+margin:auto;
 }
 
-/* photo card */
+/* image container */
 
 .photo-card{
+position:relative;
+
 background:white;
 padding:8px;
 border-radius:10px;
-width:clamp(120px,40vw,200px);
 
 box-shadow:0 6px 15px rgba(0,0,0,0.35);
 
 transform:rotate(-3deg);
-transition:transform .25s ease;
+transition:.25s;
 }
 
 .photo-card:nth-child(even){
@@ -97,11 +101,31 @@ transform:rotate(3deg);
 transform:scale(1.05) rotate(0deg);
 }
 
+/* protected images */
+
 .photo-card img{
 width:100%;
 border-radius:5px;
 display:block;
+
+pointer-events:none;
+user-select:none;
+-webkit-user-drag:none;
+-webkit-touch-callout:none;
 }
+
+/* invisible protection layer */
+
+.photo-card::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+}
+
+/* caption */
 
 .caption{
 color:black;
@@ -146,9 +170,7 @@ display:none;
 
 </head>
 
-<body>
-
-<!-- Personal Gallery Button -->
+<body oncontextmenu="return false">
 
 <button class="personal-btn" onclick="openPersonal()">
 Personal Gallery
@@ -156,33 +178,29 @@ Personal Gallery
 
 <h1>Our Memories 💜</h1>
 
-<!-- FIRST GALLERY -->
-
 <div class="gallery">
 
 <div class="photo-card">
-<img src="Memories/1.jpeg" loading="lazy">
+<img src="Memories/1.jpeg">
 <div class="caption">First time we met ❤️</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/2.jpeg" loading="lazy">
+<img src="Memories/2.jpeg">
 <div class="caption">Your smile means everything 💜</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/3.jpeg" loading="lazy">
+<img src="Memories/3.jpeg">
 <div class="caption">Best moment together ✨</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/4.jpeg" loading="lazy">
+<img src="Memories/4.jpeg">
 <div class="caption">Always my favourite person 🥰</div>
 </div>
 
 </div>
-
-<!-- VIDEO SECTION -->
 
 <div class="video-section">
 
@@ -194,31 +212,29 @@ Personal Gallery
 
 </div>
 
-<!-- SPECIAL GALLERY -->
-
 <h2>Special Moments 💕</h2>
 
 <div class="gallery">
 
-<div class="photo-card"><img src="surprise/01.jpg" loading="lazy"><div class="caption">Memory 01</div></div>
-<div class="photo-card"><img src="surprise/02.jpeg" loading="lazy"><div class="caption">Memory 02</div></div>
-<div class="photo-card"><img src="surprise/03.jpeg" loading="lazy"><div class="caption">Memory 03</div></div>
-<div class="photo-card"><img src="surprise/04.jpeg" loading="lazy"><div class="caption">Memory 04</div></div>
+<div class="photo-card"><img src="surprise/01.jpg"><div class="caption">Memory 01</div></div>
+<div class="photo-card"><img src="surprise/02.jpeg"><div class="caption">Memory 02</div></div>
+<div class="photo-card"><img src="surprise/03.jpeg"><div class="caption">Memory 03</div></div>
+<div class="photo-card"><img src="surprise/04.jpeg"><div class="caption">Memory 04</div></div>
 
-<div class="photo-card"><img src="surprise/05.jpeg" loading="lazy"><div class="caption">Memory 05</div></div>
-<div class="photo-card"><img src="surprise/06.jpeg" loading="lazy"><div class="caption">Memory 06</div></div>
-<div class="photo-card"><img src="surprise/07.jpeg" loading="lazy"><div class="caption">Memory 07</div></div>
-<div class="photo-card"><img src="surprise/08.jpg" loading="lazy"><div class="caption">Memory 08</div></div>
+<div class="photo-card"><img src="surprise/05.jpeg"><div class="caption">Memory 05</div></div>
+<div class="photo-card"><img src="surprise/06.jpeg"><div class="caption">Memory 06</div></div>
+<div class="photo-card"><img src="surprise/07.jpeg"><div class="caption">Memory 07</div></div>
+<div class="photo-card"><img src="surprise/08.jpg"><div class="caption">Memory 08</div></div>
 
-<div class="photo-card"><img src="surprise/09.jpeg" loading="lazy"><div class="caption">Memory 09</div></div>
-<div class="photo-card"><img src="surprise/10.jpeg" loading="lazy"><div class="caption">Memory 10</div></div>
-<div class="photo-card"><img src="surprise/11.jpeg" loading="lazy"><div class="caption">Memory 11</div></div>
-<div class="photo-card"><img src="surprise/12.jpeg" loading="lazy"><div class="caption">Memory 12</div></div>
+<div class="photo-card"><img src="surprise/09.jpeg"><div class="caption">Memory 09</div></div>
+<div class="photo-card"><img src="surprise/10.jpeg"><div class="caption">Memory 10</div></div>
+<div class="photo-card"><img src="surprise/11.jpeg"><div class="caption">Memory 11</div></div>
+<div class="photo-card"><img src="surprise/12.jpeg"><div class="caption">Memory 12</div></div>
 
-<div class="photo-card"><img src="surprise/13.jpeg" loading="lazy"><div class="caption">Memory 13</div></div>
-<div class="photo-card"><img src="surprise/14.jpeg" loading="lazy"><div class="caption">Memory 14</div></div>
-<div class="photo-card"><img src="surprise/15.jpeg" loading="lazy"><div class="caption">Memory 15</div></div>
-<div class="photo-card"><img src="surprise/16.jpeg" loading="lazy"><div class="caption">Memory 16</div></div>
+<div class="photo-card"><img src="surprise/13.jpeg"><div class="caption">Memory 13</div></div>
+<div class="photo-card"><img src="surprise/14.jpeg"><div class="caption">Memory 14</div></div>
+<div class="photo-card"><img src="surprise/15.jpeg"><div class="caption">Memory 15</div></div>
+<div class="photo-card"><img src="surprise/16.jpeg"><div class="caption">Memory 16</div></div>
 
 </div>
 
@@ -232,34 +248,40 @@ Next ❤️
 
 <script>
 
+/* disable drag */
+
+document.addEventListener("dragstart",e=>{
+e.preventDefault()
+})
+
+/* disable inspect shortcuts */
+
+document.addEventListener("keydown",function(e){
+
+if(e.keyCode==123) return false
+
+if(e.ctrlKey && e.shiftKey && e.keyCode==73) return false
+
+if(e.ctrlKey && e.keyCode==83) return false
+
+if(e.ctrlKey && e.keyCode==85) return false
+
+})
+
+/* music control */
+
 const music=document.getElementById("bgMusic")
 const video=document.getElementById("memoryVideo")
 
 music.volume=0.5
 
-/* mobile safe start */
-
 document.body.addEventListener("click",()=>{
 music.play().catch(()=>{})
 },{once:true})
 
-/* pause music when video plays */
-
-video.addEventListener("play",()=>{
-music.pause()
-})
-
-/* resume music when video pauses */
-
-video.addEventListener("pause",()=>{
-music.play().catch(()=>{})
-})
-
-/* resume music when video ends */
-
-video.addEventListener("ended",()=>{
-music.play().catch(()=>{})
-})
+video.addEventListener("play",()=>music.pause())
+video.addEventListener("pause",()=>music.play().catch(()=>{}))
+video.addEventListener("ended",()=>music.play().catch(()=>{}))
 
 function openPersonal(){
 window.location.href="personal.html"
