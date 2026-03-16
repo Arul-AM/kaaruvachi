@@ -40,6 +40,39 @@ background:linear-gradient(135deg,#020024,#090979,#4b0082,#7b2cbf);
 transition:opacity 2s ease;
 }
 
+/* falling stars */
+
+.star{
+position:fixed;
+top:-10px;
+width:2px;
+height:80px;
+background:linear-gradient(white,transparent);
+transform:rotate(45deg);
+animation:fallStar linear forwards;
+opacity:.8;
+}
+
+@keyframes fallStar{
+0%{transform:translateY(-100px) translateX(0) rotate(45deg);}
+100%{transform:translateY(110vh) translateX(-200px) rotate(45deg);opacity:0;}
+}
+
+/* floating hearts */
+
+.float-heart{
+position:fixed;
+font-size:22px;
+animation:floatUp 10s linear infinite;
+opacity:.6;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
 /* dark overlay fade */
 
 .fade-layer{
@@ -48,15 +81,10 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-
 background:black;
-
 opacity:0;
-
 transition:opacity 2s ease;
-
 pointer-events:none;
-
 z-index:1;
 }
 
@@ -78,7 +106,6 @@ z-index:2;
 h1{
 font-size:clamp(28px,7vw,48px);
 margin-bottom:20px;
-
 text-shadow:0 0 10px #9d4edd;
 }
 
@@ -105,7 +132,6 @@ background:linear-gradient(45deg,#4ea8de,#9d4edd);
 color:white;
 
 box-shadow:0 0 12px rgba(150,100,255,0.6);
-
 transition:.2s;
 }
 
@@ -113,13 +139,12 @@ button:hover{
 transform:scale(1.05);
 }
 
-/* popup message */
+/* popup */
 
 .popup{
 position:fixed;
 top:50%;
 left:50%;
-
 transform:translate(-50%,-50%) scale(.9);
 
 background:#111;
@@ -137,7 +162,6 @@ max-width:85%;
 line-height:1.6;
 
 transition:.4s;
-
 z-index:3;
 }
 
@@ -158,35 +182,26 @@ z-index:2;
 }
 
 @keyframes explode{
-
 0%{
 transform:translate(0,0) scale(1);
 opacity:1;
 }
-
 100%{
 transform:translate(var(--x),var(--y)) scale(1.4);
 opacity:0;
 }
-
 }
 
 /* final reveal */
 
 .final-message{
-
 position:fixed;
 top:50%;
 left:50%;
-
 transform:translate(-50%,-50%) scale(.5);
-
 text-align:center;
-
 opacity:0;
-
 transition:1.5s;
-
 z-index:4;
 }
 
@@ -196,9 +211,7 @@ transform:translate(-50%,-50%) scale(1);
 }
 
 .final-message h2{
-
 font-size:clamp(36px,8vw,70px);
-
 text-shadow:
 0 0 10px #fff,
 0 0 20px #9d4edd,
@@ -218,29 +231,21 @@ margin-top:10px;
 
 <div class="fade-layer" id="fadeLayer"></div>
 
-<!-- background music -->
-
 <audio id="bgMusic" preload="auto" loop>
 <source src="love.mp3" type="audio/mpeg">
 </audio>
 
-<!-- main content -->
-
 <div class="main" id="mainContent">
 
-<h1>Thank You 💜</h1>
+<h1>Thank You 💜 My Love</h1>
 
-<p>Maybe this message will disappear…</p>
-<p>but my care for you will never disappear ❤️</p>
-<p>Happy Birthday once again 🎂</p>
+<p id="typing"></p>
 
 <button onclick="foreverClick()">
-Forever ❤️
+Forever 💙
 </button>
 
 </div>
-
-<!-- popup message -->
 
 <div class="popup" id="popupMessage">
 
@@ -258,21 +263,57 @@ but my care for you will never disappear 💜
 
 </div>
 
-<!-- final reveal -->
-
 <div class="final-message" id="finalReveal">
-
-<h2>Arul ❤️ My Princess</h2>
+<h2>SUBHA 💜 ARUL</h2>
 <p>Forever</p>
-
 </div>
 
 <script>
 
-/* start music */
+/* typing text */
+
+const text="Maybe this message will disappear… but my care for you will never disappear ❤️"
+let i=0
+
+function typeText(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i)
+i++
+setTimeout(typeText,45)
+}
+}
+
+typeText()
+
+/* falling stars */
+
+function createStar(){
+const star=document.createElement("div")
+star.className="star"
+star.style.left=Math.random()*100+"vw"
+star.style.animationDuration=(Math.random()*3+2)+"s"
+document.body.appendChild(star)
+setTimeout(()=>star.remove(),5000)
+}
+
+setInterval(createStar,700)
+
+/* floating hearts */
+
+function floatHearts(){
+const heart=document.createElement("div")
+heart.className="float-heart"
+heart.innerHTML="💜"
+heart.style.left=Math.random()*100+"vw"
+document.body.appendChild(heart)
+setTimeout(()=>heart.remove(),10000)
+}
+
+setInterval(floatHearts,3000)
+
+/* music start */
 
 const music=document.getElementById("bgMusic")
-
 music.volume=.5
 
 document.body.addEventListener("click",()=>{
@@ -307,19 +348,18 @@ showFinal()
 
 function loveExplosion(){
 
-for(let i=0;i<40;i++){
+for(let i=0;i<45;i++){
 
 const heart=document.createElement("div")
 
 heart.innerHTML="💖"
-
 heart.className="heart"
 
 heart.style.left="50%"
 heart.style.top="50%"
 
-heart.style.setProperty("--x",(Math.random()*800-400)+"px")
-heart.style.setProperty("--y",(Math.random()*800-400)+"px")
+heart.style.setProperty("--x",(Math.random()*900-450)+"px")
+heart.style.setProperty("--y",(Math.random()*900-450)+"px")
 
 document.body.appendChild(heart)
 
@@ -335,12 +375,21 @@ function showFinal(){
 
 document.getElementById("finalReveal").classList.add("show")
 
-/* fade to black after 8 seconds */
+/* fade music */
+
+let fade=setInterval(()=>{
+if(music.volume>0.02){
+music.volume-=0.02
+}else{
+music.volume=0
+clearInterval(fade)
+}
+},200)
+
+/* fade page */
 
 setTimeout(()=>{
-
 document.body.style.opacity="0"
-
 },8000)
 
 }
