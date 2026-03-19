@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday 💜</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+text-align:center;
+color:white;
+min-height:100vh;
+background:linear-gradient(-45deg,#020024,#090979,#4b0082,#7b2cbf,#1e3c72);
+background-size:400% 400%;
+animation:gradientMove 12s ease infinite;
+user-select:none;
+-webkit-user-select:none;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+h1{
+font-size:clamp(28px,7vw,48px);
+margin-top:25px;
+text-shadow:0 0 10px #4ea8de,0 0 20px #7b2cbf,0 0 40px #9d4edd;
+}
+
+#nickname{
+font-size:clamp(18px,5vw,26px);
+margin-bottom:10px;
+color:#e6dcff;
+}
+
+.message-box{
+width:90%;
+max-width:700px;
+margin:20px auto;
+padding:20px;
+background:rgba(15,0,60,0.65);
+border-radius:18px;
+border:1px solid rgba(160,120,255,0.4);
+box-shadow:0 0 15px rgba(120,100,255,0.4);
+text-align:left;
+line-height:1.6;
+}
+
+.heart{
+position:fixed;
+font-size:20px;
+animation:float 12s linear infinite;
+opacity:0.8;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+width:90%;
+max-width:900px;
+margin:30px auto;
+}
+
+.photo-box{
+position:relative;
+overflow:hidden;
+border-radius:10px;
+}
+
+.photo-box img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+pointer-events:none;
+user-select:none;
+-webkit-user-drag:none;
+-webkit-touch-callout:none;
+box-shadow:0 0 10px rgba(150,100,255,0.6);
+}
+
+.photo-box::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+}
+
+@media(max-width:600px){
+.gallery{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+button{
+margin:10px;
+padding:12px 24px;
+font-size:16px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+background:linear-gradient(45deg,#4ea8de,#9d4edd);
+color:white;
+box-shadow:0 0 12px rgba(150,100,255,0.35);
+}
+
+.cake{
+font-size:60px;
+cursor:pointer;
+margin:20px;
+}
+
+.letter-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:1000;
+padding:20px;
+}
+
+.letter-box{
+background:white;
+color:black;
+padding:30px;
+border-radius:15px;
+max-width:400px;
+line-height:1.6;
+}
+
+.video-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+padding:15px;
+}
+
+.video-container{
+position:relative;
+width:90%;
+max-width:750px;
+background:rgba(255,255,255,0.05);
+padding:16px;
+border-radius:18px;
+box-shadow:0 0 25px rgba(157,78,221,0.35);
+}
+
+#wishVideo{
+width:100%;
+max-height:72vh;
+border-radius:15px;
+background:#000;
+}
+
+.close-video{
+position:absolute;
+top:-40px;
+right:0;
+font-size:30px;
+cursor:pointer;
+color:white;
+}
+
+.video-controls-row{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:14px;
+flex-wrap:wrap;
+}
+
+.video-count{
+margin-top:10px;
+font-size:15px;
+color:#e9dcff;
+opacity:.9;
+}
+</style>
+</head>
+
+<body oncontextmenu="return false">
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<div class="heart" style="left:5%">💜</div>
+<div class="heart" style="left:25%;animation-delay:3s">💙</div>
+<div class="heart" style="left:50%;animation-delay:6s">💜</div>
+<div class="heart" style="left:70%;animation-delay:2s">💙</div>
+<div class="heart" style="left:90%;animation-delay:4s">💜</div>
+
+<h1>HAPPY BIRTHDAY SUBHA 💙</h1>
+
+<div id="nickname"></div>
+
+<div class="message-box">
+<p>Happy Birthday di Kaaruvachi 💜</p>
+<p>KD listen....😘</p>
+<p>Life la yavalow miss parts irukalam ,trust me ethuu nee kekura mari oru memory ah Iruku 😌</p>
+<p>Sometimes ethaa vetta better ah kutta kudukalam but this one , you can't forget... 💙</p>
+<p>Yapavum Happy ah irukanum life la problem yavalow iruko aavalow happiness waiting la Iruku....</p>
+<p>This Day is yours, so enjoy panu ...not only Today, upcoming days also yours ..... 💙</p>
+<p>Stay strong, do what you think 😘
+Naa irupen , am always there for you 💜💙</p>
+</div>
+
+<button onclick="openLetter()">💌 Open My Letter</button>
+
+<div class="cake" onclick="celebrate()">🎂</div>
+
+<div class="gallery">
+<div class="photo-box"><img src="Memories/01.jpeg"></div>
+<div class="photo-box"><img src="Memories/02.jpeg"></div>
+<div class="photo-box"><img src="Memories/03.jpeg"></div>
+<div class="photo-box"><img src="Memories/04.jpeg"></div>
+<div class="photo-box"><img src="Memories/05.jpeg"></div>
+<div class="photo-box"><img src="Memories/06.jpeg"></div>
+<div class="photo-box"><img src="Memories/07.jpeg"></div>
+<div class="photo-box"><img src="Memories/08.jpeg"></div>
+<div class="photo-box"><img src="Memories/09.jpeg"></div>
+<div class="photo-box"><img src="Memories/10.jpeg"></div>
+<div class="photo-box"><img src="Memories/11.jpeg"></div>
+<div class="photo-box"><img src="Memories/12.jpeg"></div>
+<div class="photo-box"><img src="Memories/13.jpeg"></div>
+<div class="photo-box"><img src="Memories/14.jpeg"></div>
+<div class="photo-box"><img src="Memories/15.jpeg"></div>
+<div class="photo-box"><img src="Memories/16.jpeg"></div>
+</div>
+
+<button onclick="window.location.href='memories.html'">
+Memories 📸
+</button>
+
+<div class="letter-popup" id="letterPopup">
+  <div class="letter-box">
+    <h2>My Letter For You 💜</h2>
+    <p>
+    Dear My Pap's,<br><br>
+    Will you marry me🤩.
+    Naa oona nalla pathupen 😌, i promising you. <br>
+    Neeyum Naanum life long sanda pottute irukanum KD 😁...
+    Mm nu sollu kalyanam panitu sanda pottalam.<br><br>
+    ok jokes pothum , hey yappavum yathukum bayapatama irukanum☺️ ...
+    Naa irunthalum illanalum strong ah irukanum.🤩<br><br>
+    Yaaru yena sonnalum ketta visayam ah kandukatha , nallathuna vettatha 😍....
+    Avanga oonaku advice kuttutha ,just ennakaga think pani paaru 😁...<br><br>
+    Ennaku nu yaarum irunthathu illa ,anaa ipo nee iruka 🥺....
+    Ennaku athuu pothum ,nee ena thititu nalum seri adichalum seri ,naa oona vettu poga matten.<br>
+    Care pani paththarama oona pathupen - promise 😍 ❤️
+    </p>
+    <button onclick="closeLetter()">Close</button>
+  </div>
+</div>
+
+<div class="video-popup" id="videoPopup">
+  <div class="video-container">
+    <span class="close-video" onclick="closeVideoPopup()">✖</span>
+
+    <video id="wishVideo" controls autoplay playsinline preload="auto"></video>
+
+    <div class="video-controls-row">
+      <button onclick="prevWishVideo()">⏮ Prev</button>
+      <button onclick="toggleBgMusic()" id="musicToggleBtn">🎵 BG Music On</button>
+      <button onclick="nextWishVideo()">Next ⏭</button>
+    </div>
+
+    <div class="video-count" id="videoCount">1 / 15</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("dragstart",e=>e.preventDefault());
+
+document.addEventListener("keydown",function(e){
+  if(e.keyCode==123) return false;
+  if(e.ctrlKey && e.shiftKey && e.keyCode==73) return false;
+  if(e.ctrlKey && e.keyCode==83) return false;
+  if(e.ctrlKey && e.keyCode==85) return false;
+});
+
+const music = document.getElementById("bgMusic");
+const wishVideo = document.getElementById("wishVideo");
+const videoPopup = document.getElementById("videoPopup");
+const videoCount = document.getElementById("videoCount");
+const musicToggleBtn = document.getElementById("musicToggleBtn");
+
+const normalBgVolume = 0.5;
+const popupBgVolume = 0.2;
+
+music.volume = popupBgVolume;
+
+const names = [
+  "KD Queen 👑",
+  "Kaaruvachi 💜",
+  "Copy Cat ✨",
+  "Pap's 🥰",
+  "Wifey 💙"
+];
+
+let index = 0;
+function showName(){
+  document.getElementById("nickname").textContent = names[index];
+  index++;
+  if(index < names.length){
+    setTimeout(showName,1800);
+  }
+}
+showName();
+
+function openLetter(){
+  document.getElementById("letterPopup").style.display="flex";
+}
+
+function closeLetter(){
+  document.getElementById("letterPopup").style.display="none";
+}
+
+function celebrate(){
+  for(let i=0;i<40;i++){
+    let heart=document.createElement("div");
+    heart.innerHTML="💜";
+    heart.style.position="fixed";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.top="-20px";
+    heart.style.fontSize="20px";
+    heart.style.animation="fall 3s linear";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),3000);
+  }
+}
+
+const style=document.createElement("style");
+style.innerHTML=`
+@keyframes fall{
+0%{transform:translateY(0)}
+100%{transform:translateY(100vh)}
+}`;
+document.head.appendChild(style);
+
+/* Use relative paths from surprise.html */
+const wishVideos = [
+  "Wishes/01 (1).mp4",
+  "Wishes/02.mp4",
+  "Wishes/03.mp4",
+  "Wishes/04.mp4",
+  "Wishes/05.mp4",
+  "Wishes/06.mp4",
+  "Wishes/07.mp4",
+  "Wishes/08.mp4",
+  "Wishes/09.mp4",
+  "Wishes/10.mp4",
+  "Wishes/11.mp4",
+  "Wishes/12.mp4",
+  "Wishes/13.mp4",
+  "Wishes/14.mp4",
+  "Wishes/15.mp4"
+];
+
+let currentWishIndex = 0;
+let bgMusicEnabled = true;
+
+function updateVideoCount(){
+  videoCount.textContent = `${currentWishIndex + 1} / ${wishVideos.length}`;
+}
+
+function applyVolumes(){
+  if(!bgMusicEnabled){
+    music.volume = 0;
+  }else{
+    music.volume = videoPopup.style.display === "flex" ? popupBgVolume : normalBgVolume;
+  }
+  wishVideo.volume = 1;
+}
+
+function tryPlayMedia(){
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
+  wishVideo.play().catch(()=>{});
+}
+
+function loadWishVideo(i){
+  if(i < 0) i = wishVideos.length - 1;
+  if(i >= wishVideos.length) i = 0;
+
+  currentWishIndex = i;
+  wishVideo.pause();
+  wishVideo.src = wishVideos[currentWishIndex];
+  updateVideoCount();
+  applyVolumes();
+  wishVideo.load();
+
+  wishVideo.onloadeddata = () => {
+    wishVideo.play().catch(()=>{});
+  };
+}
+
+function openVideoPopup(){
+  videoPopup.style.display = "flex";
+  applyVolumes();
+  loadWishVideo(currentWishIndex);
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
+}
+
+function closeVideoPopup(){
+  wishVideo.pause();
+  wishVideo.currentTime = 0;
+  videoPopup.style.display = "none";
+  applyVolumes();
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
+}
+
+function nextWishVideo(){
+  loadWishVideo(currentWishIndex + 1);
+}
+
+function prevWishVideo(){
+  loadWishVideo(currentWishIndex - 1);
+}
+
+function toggleBgMusic(){
+  bgMusicEnabled = !bgMusicEnabled;
+  applyVolumes();
+  musicToggleBtn.textContent = bgMusicEnabled ? "🎵 BG Music On" : "🔇 BG Music Off";
+
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }else{
+    music.pause();
+  }
+}
+
+wishVideo.addEventListener("ended", function(){
+  nextWishVideo();
+});
+
+wishVideo.addEventListener("error", function(){
+  console.log("Video failed:", wishVideos[currentWishIndex]);
+  nextWishVideo();
+});
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    openVideoPopup();
+  }, 400);
+});
+
+/* Helps autoplay on browsers that require first tap */
+document.addEventListener("click", () => {
+  tryPlayMedia();
+}, { once:true });
+</script>
+
+</body>
+</html>
