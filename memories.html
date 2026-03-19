@@ -26,7 +26,6 @@ animation:gradientMove 12s ease infinite;
 
 user-select:none;
 -webkit-user-select:none;
-
 overflow-x:hidden;
 }
 
@@ -43,10 +42,12 @@ position:fixed;
 top:-10px;
 width:2px;
 height:80px;
-background:linear-gradient(white, transparent);
+background:linear-gradient(white,transparent);
 opacity:0.8;
 transform:rotate(45deg);
 animation:fallStar linear forwards;
+pointer-events:none;
+z-index:0;
 }
 
 @keyframes fallStar{
@@ -67,6 +68,8 @@ position:fixed;
 font-size:20px;
 animation:float 12s linear infinite;
 opacity:0.7;
+pointer-events:none;
+z-index:0;
 }
 
 @keyframes float{
@@ -86,10 +89,8 @@ font-size:14px;
 border:none;
 border-radius:20px;
 cursor:pointer;
-
 background:linear-gradient(45deg,#4ea8de,#9d4edd);
 color:white;
-
 box-shadow:0 0 10px rgba(150,100,255,0.6);
 z-index:1000;
 }
@@ -97,12 +98,16 @@ z-index:1000;
 /* titles */
 
 h1{
+position:relative;
+z-index:1;
 margin-top:25px;
 font-size:clamp(28px,7vw,48px);
 text-shadow:0 0 10px #9d4edd;
 }
 
 h2{
+position:relative;
+z-index:1;
 margin-top:30px;
 font-size:clamp(20px,6vw,30px);
 }
@@ -110,6 +115,8 @@ font-size:clamp(20px,6vw,30px);
 /* gallery */
 
 .gallery{
+position:relative;
+z-index:1;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
 gap:20px;
@@ -117,26 +124,22 @@ padding:20px;
 width:90%;
 max-width:1000px;
 margin:auto;
-
 animation:fadeGallery 1.5s ease;
 }
 
 @keyframes fadeGallery{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 /* image container */
 
 .photo-card{
 position:relative;
-
 background:white;
 padding:8px;
 border-radius:10px;
-
 box-shadow:0 6px 15px rgba(0,0,0,0.35);
-
 transform:rotate(-3deg);
 transition:.25s;
 }
@@ -155,7 +158,6 @@ transform:scale(1.05) rotate(0deg);
 width:100%;
 border-radius:5px;
 display:block;
-
 pointer-events:none;
 user-select:none;
 -webkit-user-drag:none;
@@ -182,29 +184,68 @@ font-size:13px;
 /* video */
 
 .video-section{
+position:relative;
+z-index:1;
 margin-top:25px;
 }
 
-video{
+.video-wrap{
 width:90%;
 max-width:600px;
+margin:0 auto;
 border-radius:15px;
+overflow:hidden;
 box-shadow:0 0 15px #9d4edd;
+background:black;
+}
+
+.custom-video{
+position:relative;
+}
+
+video{
+width:100%;
+display:block;
+border-radius:15px;
+background:black;
+outline:none;
+}
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+padding:14px 24px;
+border:none;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+background:linear-gradient(45deg,#4ea8de,#9d4edd);
+color:white;
+box-shadow:0 0 12px rgba(150,100,255,0.6);
+z-index:2;
+}
+
+.video-note{
+margin-top:10px;
+font-size:13px;
+opacity:.8;
 }
 
 /* button */
 
 button{
+position:relative;
+z-index:1;
 margin:35px;
 padding:12px 26px;
 font-size:16px;
 border:none;
 border-radius:30px;
 cursor:pointer;
-
 background:linear-gradient(45deg,#4ea8de,#9d4edd);
 color:white;
-
 box-shadow:0 0 12px rgba(150,100,255,0.6);
 }
 
@@ -256,22 +297,22 @@ Personal Gallery
 <div class="gallery">
 
 <div class="photo-card">
-<img src="Memories/1.jpeg">
+<img src="Memories/1.jpeg" loading="lazy" alt="">
 <div class="caption">First time we met ❤️</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/2.jpeg">
+<img src="Memories/2.jpeg" loading="lazy" alt="">
 <div class="caption">Your smile means everything 💜</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/3.jpeg">
+<img src="Memories/3.jpeg" loading="lazy" alt="">
 <div class="caption">Best moment together ✨</div>
 </div>
 
 <div class="photo-card">
-<img src="Memories/4.jpeg">
+<img src="Memories/4.jpeg" loading="lazy" alt="">
 <div class="caption">Always my favourite person 🥰</div>
 </div>
 
@@ -281,9 +322,23 @@ Personal Gallery
 
 <h2>Special Memory 🎥</h2>
 
-<video id="memoryVideo" controls preload="metadata">
+<div class="video-wrap custom-video">
+<video
+id="memoryVideo"
+preload="metadata"
+playsinline
+controlsList="nodownload noplaybackrate noremoteplayback nofullscreen"
+disablePictureInPicture
+disableRemotePlayback
+oncontextmenu="return false"
+>
 <source src="wish.mp4" type="video/mp4">
 </video>
+
+<button class="play-btn" id="playBtn" type="button">▶ Play Video</button>
+</div>
+
+<div class="video-note">Protected player mode</div>
 
 </div>
 
@@ -291,25 +346,25 @@ Personal Gallery
 
 <div class="gallery">
 
-<div class="photo-card"><img src="surprise/01.jpg"><div class="caption">Memory 01</div></div>
-<div class="photo-card"><img src="surprise/02.jpeg"><div class="caption">Memory 02</div></div>
-<div class="photo-card"><img src="surprise/03.jpeg"><div class="caption">Memory 03</div></div>
-<div class="photo-card"><img src="surprise/04.jpeg"><div class="caption">Memory 04</div></div>
+<div class="photo-card"><img src="surprise/01.jpg" loading="lazy" alt=""><div class="caption">Memory 01</div></div>
+<div class="photo-card"><img src="surprise/02.jpeg" loading="lazy" alt=""><div class="caption">Memory 02</div></div>
+<div class="photo-card"><img src="surprise/03.jpeg" loading="lazy" alt=""><div class="caption">Memory 03</div></div>
+<div class="photo-card"><img src="surprise/04.jpeg" loading="lazy" alt=""><div class="caption">Memory 04</div></div>
 
-<div class="photo-card"><img src="surprise/05.jpeg"><div class="caption">Memory 05</div></div>
-<div class="photo-card"><img src="surprise/06.jpeg"><div class="caption">Memory 06</div></div>
-<div class="photo-card"><img src="surprise/07.jpeg"><div class="caption">Memory 07</div></div>
-<div class="photo-card"><img src="surprise/08.jpg"><div class="caption">Memory 08</div></div>
+<div class="photo-card"><img src="surprise/05.jpeg" loading="lazy" alt=""><div class="caption">Memory 05</div></div>
+<div class="photo-card"><img src="surprise/06.jpeg" loading="lazy" alt=""><div class="caption">Memory 06</div></div>
+<div class="photo-card"><img src="surprise/07.jpeg" loading="lazy" alt=""><div class="caption">Memory 07</div></div>
+<div class="photo-card"><img src="surprise/08.jpg" loading="lazy" alt=""><div class="caption">Memory 08</div></div>
 
-<div class="photo-card"><img src="surprise/09.jpeg"><div class="caption">Memory 09</div></div>
-<div class="photo-card"><img src="surprise/10.jpeg"><div class="caption">Memory 10</div></div>
-<div class="photo-card"><img src="surprise/11.jpeg"><div class="caption">Memory 11</div></div>
-<div class="photo-card"><img src="surprise/12.jpeg"><div class="caption">Memory 12</div></div>
+<div class="photo-card"><img src="surprise/09.jpeg" loading="lazy" alt=""><div class="caption">Memory 09</div></div>
+<div class="photo-card"><img src="surprise/10.jpeg" loading="lazy" alt=""><div class="caption">Memory 10</div></div>
+<div class="photo-card"><img src="surprise/11.jpeg" loading="lazy" alt=""><div class="caption">Memory 11</div></div>
+<div class="photo-card"><img src="surprise/12.jpeg" loading="lazy" alt=""><div class="caption">Memory 12</div></div>
 
-<div class="photo-card"><img src="surprise/13.jpeg"><div class="caption">Memory 13</div></div>
-<div class="photo-card"><img src="surprise/14.jpeg"><div class="caption">Memory 14</div></div>
-<div class="photo-card"><img src="surprise/15.jpeg"><div class="caption">Memory 15</div></div>
-<div class="photo-card"><img src="surprise/16.jpeg"><div class="caption">Memory 16</div></div>
+<div class="photo-card"><img src="surprise/13.jpeg" loading="lazy" alt=""><div class="caption">Memory 13</div></div>
+<div class="photo-card"><img src="surprise/14.jpeg" loading="lazy" alt=""><div class="caption">Memory 14</div></div>
+<div class="photo-card"><img src="surprise/15.jpeg" loading="lazy" alt=""><div class="caption">Memory 15</div></div>
+<div class="photo-card"><img src="surprise/16.jpeg" loading="lazy" alt=""><div class="caption">Memory 16</div></div>
 
 </div>
 
@@ -319,7 +374,7 @@ Next ❤️
 
 <div class="viewer" id="viewer">
 <span class="close" onclick="closeViewer()">✖</span>
-<img id="viewerImg">
+<img id="viewerImg" alt="">
 </div>
 
 <audio id="bgMusic" loop>
@@ -369,14 +424,25 @@ function closeViewer(){
 document.getElementById("viewer").style.display="none"
 }
 
-/* disable drag */
+/* disable drag / common shortcuts */
 
-document.addEventListener("dragstart",e=>{e.preventDefault()})
+document.addEventListener("dragstart",e=>{
+e.preventDefault()
+})
+
+document.addEventListener("keydown",function(e){
+if(e.keyCode===123) e.preventDefault()
+if(e.ctrlKey && e.shiftKey && e.keyCode===73) e.preventDefault()
+if(e.ctrlKey && e.shiftKey && e.keyCode===74) e.preventDefault()
+if(e.ctrlKey && e.keyCode===83) e.preventDefault()
+if(e.ctrlKey && e.keyCode===85) e.preventDefault()
+})
 
 /* music control */
 
 const music=document.getElementById("bgMusic")
 const video=document.getElementById("memoryVideo")
+const playBtn=document.getElementById("playBtn")
 
 music.volume=0.5
 
@@ -384,9 +450,32 @@ document.body.addEventListener("click",()=>{
 music.play().catch(()=>{})
 },{once:true})
 
-video.addEventListener("play",()=>music.pause())
-video.addEventListener("pause",()=>music.play().catch(()=>{}))
-video.addEventListener("ended",()=>music.play().catch(()=>{}))
+playBtn.addEventListener("click",()=>{
+video.setAttribute("controls","controls")
+video.play().catch(()=>{})
+playBtn.style.display="none"
+music.pause()
+})
+
+video.addEventListener("play",()=>{
+music.pause()
+})
+
+video.addEventListener("pause",()=>{
+if(video.currentTime < video.duration){
+playBtn.style.display="block"
+music.play().catch(()=>{})
+}
+})
+
+video.addEventListener("ended",()=>{
+playBtn.style.display="block"
+music.play().catch(()=>{})
+})
+
+video.addEventListener("contextmenu",e=>{
+e.preventDefault()
+})
 
 function openPersonal(){
 window.location.href="personal.html"
