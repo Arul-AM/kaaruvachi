@@ -333,6 +333,7 @@ function floatHearts(){
   const heart = document.createElement("div");
   heart.className = "float-heart";
   heart.innerHTML = "💜";
+  heart.innerHTML = "💙";
   heart.style.left = Math.random()*100 + "vw";
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),10000);
