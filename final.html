@@ -256,18 +256,23 @@ button:hover{
 
 <div class="fade-layer" id="fadeLayer"></div>
 
+<!-- first page bg music -->
 <audio id="bgMusic" preload="auto" loop>
   <source src="love.mp3" type="audio/mpeg">
 </audio>
 
+<!-- video section bg music -->
 <audio id="videoMusic" preload="auto" loop>
   <source src="finalbg.mp3" type="audio/mpeg">
 </audio>
 
 <div class="main" id="mainContent">
+
   <h1>Thank You 💜 My Love</h1>
+
   <p id="typing"></p>
 
+  <!-- NEW: video player below title/text -->
   <div class="video-section">
     <div class="video-box">
       <video id="memoryVideo" playsinline muted preload="auto"></video>
@@ -278,6 +283,7 @@ button:hover{
   <button onclick="foreverClick()">
     Forever 💙
   </button>
+
 </div>
 
 <div class="popup" id="popupMessage">
@@ -287,7 +293,9 @@ button:hover{
   Nee en life la vandhadhu enakku romba periya happiness.
   <br><br>
   Maybe this message will disappear…
-  but my care for you will never disappear 💜
+  but my care for you will never disappear 💜<br><br>
+
+  
 </div>
 
 <div class="final-message" id="finalReveal">
@@ -297,7 +305,7 @@ button:hover{
 
 <script>
 /* typing text */
-const text = "Maybe this message will disappear… but my care for you will never disappear ❤️ Tap to Play";
+const text = "Maybe this message will disappear… but my care for you will never disappear ❤️       Tap to Play";
 let i = 0;
 
 function typeText(){
@@ -344,53 +352,49 @@ document.body.addEventListener("click", () => {
   startVideoSequence();
 }, { once:true });
 
-/* 32 video playlist auto-generated */
-const captions = [
-  "Our sweet beginning 💜",
-  "A little moment, a big memory ✨",
-  "Little smiles, big memories ✨",
-  "You made this moment beautiful 💖",
-  "One more memory to keep forever 💜",
-  "My favorite part of the day 💙",
-  "A soft moment full of love 🌸",
-  "Every frame feels special ✨",
-  "You are my sweetest memory 💕",
-  "This smile stays in my heart 💜",
-  "Love in the smallest moments 🌙",
-  "A memory I never want to lose 💖",
-  "Still falling for you everyday 💜",
-  "You made ordinary moments magical ✨",
-  "A beautiful second, forever mine 💙",
-  "You are the peace in my heart 💜",
-  "This memory still feels alive 🌸",
-  "Every look of yours is special 💕",
-  "The kind of moment I replay forever ✨",
-  "A soft piece of us, captured 💜",
-  "My heart smiles at this memory 💖",
-  "One clip, so many feelings 💙",
-  "The sweetness of us in one frame 🌙",
-  "This moment will stay forever 💜",
-  "Love looks beautiful on you ✨",
-  "A memory wrapped in love 💕",
-  "You are my forever favorite 💖",
-  "Another little memory, another big smile 💜",
-  "My world feels softer with you 🌸",
-  "This is what love feels like 💙",
-  "A special memory of my special person 💜",
-  "Forever starts with moments like this ✨"
+/* video playlist */
+const videoList = [
+  { src:"slomo/IE (1).mp4", caption:"Our sweet beginning 💜" },
+  { src:"slomo/IE (2).mp4", caption:"A little moment, a big memory ✨" },
+  { src:"slomo/IE (3).mp4", caption:"Little smiles, big memories ✨" },
+  { src:"slomo/IE (4).mp4", caption:"You made this moment beautiful 💖" },
+  { src:"slomo/IE (5).mp4", caption:"One more memory to keep forever 💜" },
+  { src:"slomo/IE (6).mp4", caption:"My favorite part of the day 💙" },
+  { src:"slomo/IE (7).mp4", caption:"A soft moment full of love 🌸" },
+  { src:"slomo/IE (8).mp4", caption:"Every frame feels special ✨" },
+  { src:"slomo/IE (9).mp4", caption:"You are my sweetest memory 💕" },
+  { src:"slomo/IE (10).mp4", caption:"This smile stays in my heart 💜" },
+  { src:"slomo/IE (11).mp4", caption:"Love in the smallest moments 🌙" },
+  { src:"slomo/IE (12).mp4", caption:"A memory I never want to lose 💖" },
+  { src:"slomo/IE (13).mp4", caption:"Still falling for you everyday 💜" },
+  { src:"slomo/IE (14).mp4", caption:"You made ordinary moments magical ✨" },
+  { src:"slomo/IE (15).mp4", caption:"A beautiful second, forever mine 💙" },
+  { src:"slomo/IE (16).mp4", caption:"You are the peace in my heart 💜" },
+  { src:"slomo/IE (17).mp4", caption:"This memory still feels alive 🌸" },
+  { src:"slomo/IE (18).mp4", caption:"Every look of yours is special 💕" },
+  { src:"slomo/IE (19).mp4", caption:"The kind of moment I replay forever ✨" },
+  { src:"slomo/IE (20).mp4", caption:"A soft piece of us, captured 💜" },
+  { src:"slomo/IE (21).mp4", caption:"My heart smiles at this memory 💖" },
+  { src:"slomo/IE (22).mp4", caption:"One clip, so many feelings 💙" },
+  { src:"slomo/IE (23).mp4", caption:"The sweetness of us in one frame 🌙" },
+  { src:"slomo/IE (24).mp4", caption:"This moment will stay forever 💜" },
+  { src:"slomo/IE (25).mp4", caption:"Love looks beautiful on you ✨" },
+  { src:"slomo/IE (26).mp4", caption:"A memory wrapped in love 💕" },
+  { src:"slomo/IE (27).mp4", caption:"You are my forever favorite 💖" },
+  { src:"slomo/IE (28).mp4", caption:"Another little memory, another big smile 💜" },
+  { src:"slomo/IE (29).mp4", caption:"My world feels softer with you 🌸" },
+  { src:"slomo/IE (30).mp4", caption:"This is what love feels like 💙" },
+  { src:"slomo/IE (31).mp4", caption:"A special memory of my special person 💜" },
+  { src:"slomo/IE (32).mp4", caption:"Forever starts with moments like this ✨" }
 ];
 
-const videoList = Array.from({ length: 32 }, (_, i) => ({
-  src: `slomo/IE (${i + 1}).mp4`,
-  caption: captions[i] || `Beautiful memory ${i + 1} 💜`
-}));
+
 
 const memoryVideo = document.getElementById("memoryVideo");
 const videoCaption = document.getElementById("videoCaption");
 
 let currentVideoIndex = 0;
 let videoStarted = false;
-let clipTimer = null;
 
 /* memories.html style auto sequence with fade */
 function startVideoSequence(){
@@ -403,57 +407,46 @@ function playMemoryClip(index){
   const clip = videoList[index];
   if(!clip) return;
 
-  clearTimeout(clipTimer);
   memoryVideo.classList.remove("show");
   memoryVideo.pause();
 
   setTimeout(() => {
     memoryVideo.src = clip.src;
-    memoryVideo.muted = true;
-    memoryVideo.volume = 0;
-    memoryVideo.playbackRate = 0.85;
+    memoryVideo.muted = true;   // DO NOT PLAY VIDEO AUDIO
+    memoryVideo.playbackRate = 0.85; // slight slow motion feel
     videoCaption.innerHTML = clip.caption;
+
     memoryVideo.load();
 
     memoryVideo.onloadedmetadata = () => {
       let startAt = 0;
       let endAt = memoryVideo.duration;
 
+      /* if clip is very long, show a shorter slow cinematic portion */
       if(memoryVideo.duration > 8){
         startAt = 0.3;
         endAt = 8;
       }
 
       memoryVideo.currentTime = startAt;
-
       memoryVideo.play().then(() => {
         memoryVideo.classList.add("show");
-      }).catch(() => {
-        goNextClip();
-      });
+      }).catch(()=>{});
 
       const visibleTime = Math.max(3000, (endAt - startAt) * 1000);
 
-      clipTimer = setTimeout(() => {
+      setTimeout(() => {
         memoryVideo.classList.remove("show");
 
         setTimeout(() => {
           memoryVideo.pause();
-          goNextClip();
+          currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+          playMemoryClip(currentVideoIndex);
         }, 2200);
 
       }, visibleTime);
     };
-
-    memoryVideo.onerror = () => {
-      goNextClip();
-    };
   }, 400);
-}
-
-function goNextClip(){
-  currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-  playMemoryClip(currentVideoIndex);
 }
 
 /* button click */
@@ -463,6 +456,7 @@ function foreverClick(){
   const popup = document.getElementById("popupMessage");
   popup.classList.add("show");
 
+  /* switch from first bg music to final video-section bg music */
   fadeAudio(music, 1200, () => {
     music.pause();
     music.currentTime = 0;
@@ -480,11 +474,11 @@ function foreverClick(){
 /* heart explosion */
 function loveExplosion(){
   for(let i=0;i<45;i++){
-    const heart = document.createElement("div");
-    heart.innerHTML = "💖";
-    heart.className = "heart";
-    heart.style.left = "50%";
-    heart.style.top = "50%";
+    const heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.className="heart";
+    heart.style.left="50%";
+    heart.style.top="50%";
     heart.style.setProperty("--x",(Math.random()*900-450)+"px");
     heart.style.setProperty("--y",(Math.random()*900-450)+"px");
     document.body.appendChild(heart);
@@ -509,6 +503,7 @@ function fadeAudio(audio, intervalTime = 200, callback){
 function showFinal(){
   document.getElementById("finalReveal").classList.add("show");
 
+  /* fade second music */
   setTimeout(() => {
     fadeAudio(videoMusic, 250, () => {
       videoMusic.pause();
@@ -516,6 +511,7 @@ function showFinal(){
     });
   }, 3500);
 
+  /* fade page */
   setTimeout(() => {
     document.body.style.opacity = "0";
   }, 8000);
@@ -524,3 +520,4 @@ function showFinal(){
 
 </body>
 </html>
+
