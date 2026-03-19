@@ -234,7 +234,6 @@ Naa irupen , am always there for you 💜💙</p>
 </div>
 
 <button onclick="openLetter()">💌 Open My Letter</button>
-<button onclick="openVideoPopup()">🎥 Open Wishes</button>
 
 <div class="cake" onclick="celebrate()">🎂</div>
 
@@ -272,10 +271,8 @@ Memories 📸
     Mm nu sollu kalyanam panitu sanda pottalam.<br><br>
     ok jokes pothum , hey yappavum yathukum bayapatama irukanum☺️ ...
     Naa irunthalum illanalum strong ah irukanum.🤩<br><br>
-
     Yaaru yena sonnalum ketta visayam ah kandukatha , nallathuna vettatha 😍....
     Avanga oonaku advice kuttutha ,just ennakaga think pani paaru 😁...<br><br>
-
     Ennaku nu yaarum irunthathu illa ,anaa ipo nee iruka 🥺....
     Ennaku athuu pothum ,nee ena thititu nalum seri adichalum seri ,naa oona vettu poga matten.<br>
     Care pani paththarama oona pathupen - promise 😍 ❤️
@@ -368,7 +365,6 @@ style.innerHTML=`
 }`;
 document.head.appendChild(style);
 
-/* 15+ wishes videos */
 const wishVideos = [
   "wishes/01.mp4",
   "wishes/02.mp4",
@@ -385,9 +381,6 @@ const wishVideos = [
   "wishes/13.mp4",
   "wishes/14.mp4",
   "wishes/15.mp4"
-  // add more here if needed
-  // "wishes/16.mp4",
-  // "wishes/17.mp4"
 ];
 
 let currentWishIndex = 0;
@@ -417,14 +410,15 @@ function loadWishVideo(i){
   wishVideo.load();
   updateVideoCount();
   applyVolumes();
-
   wishVideo.play().catch(()=>{});
 }
 
 function openVideoPopup(){
   videoPopup.style.display = "flex";
   loadWishVideo(currentWishIndex);
-  music.play().catch(()=>{});
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
 }
 
 function closeVideoPopup(){
@@ -448,6 +442,8 @@ function toggleBgMusic(){
 
   if(bgMusicEnabled){
     music.play().catch(()=>{});
+  }else{
+    music.pause();
   }
 }
 
@@ -459,17 +455,11 @@ wishVideo.addEventListener("play",function(){
   applyVolumes();
 });
 
-wishVideo.addEventListener("volumechange",function(){
-  if(wishVideo.volume < 1){
-    wishVideo.volume = 1;
-  }
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    openVideoPopup();
+  }, 500);
 });
-
-document.addEventListener("click",()=>{
-  if(bgMusicEnabled){
-    music.play().catch(()=>{});
-  }
-},{once:true});
 </script>
 
 </body>
