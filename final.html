@@ -1,399 +1,497 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <link rel="preload" href="love.mp3" as="audio">
+<link rel="preload" href="finalbg.mp3" as="audio">
 
 <title>Forever 💜</title>
 
 <style>
-
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html,body{
-height:100%;
-overflow:hidden;
+  height:100%;
+  overflow-x:hidden;
 }
 
 /* main background */
-
 body{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-font-family:'Segoe UI',sans-serif;
-text-align:center;
-color:white;
-
-background:linear-gradient(135deg,#020024,#090979,#4b0082,#7b2cbf);
-
-transition:opacity 2s ease;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg,#020024,#090979,#4b0082,#7b2cbf);
+  transition:opacity 2s ease;
+  padding:30px 15px 60px;
 }
 
 /* falling stars */
-
 .star{
-position:fixed;
-top:-10px;
-width:2px;
-height:80px;
-background:linear-gradient(white,transparent);
-transform:rotate(45deg);
-animation:fallStar linear forwards;
-opacity:.8;
+  position:fixed;
+  top:-10px;
+  width:2px;
+  height:80px;
+  background:linear-gradient(white,transparent);
+  transform:rotate(45deg);
+  animation:fallStar linear forwards;
+  opacity:.8;
+  z-index:0;
 }
 
 @keyframes fallStar{
-0%{transform:translateY(-100px) translateX(0) rotate(45deg);}
-100%{transform:translateY(110vh) translateX(-200px) rotate(45deg);opacity:0;}
+  0%{transform:translateY(-100px) translateX(0) rotate(45deg);}
+  100%{transform:translateY(110vh) translateX(-200px) rotate(45deg);opacity:0;}
 }
 
 /* floating hearts */
-
 .float-heart{
-position:fixed;
-font-size:22px;
-animation:floatUp 10s linear infinite;
-opacity:.6;
+  position:fixed;
+  font-size:22px;
+  animation:floatUp 10s linear infinite;
+  opacity:.6;
+  z-index:0;
 }
 
 @keyframes floatUp{
-0%{transform:translateY(100vh);opacity:0;}
-50%{opacity:1;}
-100%{transform:translateY(-10vh);opacity:0;}
+  0%{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
 }
 
 /* dark overlay fade */
-
 .fade-layer{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-opacity:0;
-transition:opacity 2s ease;
-pointer-events:none;
-z-index:1;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  opacity:0;
+  transition:opacity 2s ease;
+  pointer-events:none;
+  z-index:5;
 }
 
 .fade-layer.show{
-opacity:.85;
+  opacity:.85;
 }
 
 /* main section */
-
 .main{
-display:flex;
-flex-direction:column;
-align-items:center;
-z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:2;
+  width:100%;
+  max-width:950px;
 }
 
 /* title */
-
 h1{
-font-size:clamp(28px,7vw,48px);
-margin-bottom:20px;
-text-shadow:0 0 10px #9d4edd;
+  font-size:clamp(28px,7vw,48px);
+  margin-bottom:20px;
+  text-shadow:0 0 10px #9d4edd;
 }
 
 /* text */
-
 p{
-font-size:clamp(16px,4vw,22px);
-max-width:90%;
-line-height:1.7;
-margin-bottom:10px;
+  font-size:clamp(16px,4vw,22px);
+  max-width:90%;
+  line-height:1.7;
+  margin-bottom:10px;
+}
+
+/* video memories section */
+.video-section{
+  width:100%;
+  max-width:760px;
+  margin-top:28px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.video-box{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:22px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  box-shadow:0 0 25px rgba(157,78,221,.35);
+  border:1px solid rgba(255,255,255,.12);
+  position:relative;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:0;
+  transition:opacity 2.5s ease, transform 8s ease;
+  transform:scale(1.03);
+  background:#000;
+}
+
+video.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+.video-caption{
+  font-size:clamp(14px,3.5vw,18px);
+  color:#f5eaff;
+  opacity:.9;
+  min-height:24px;
 }
 
 /* button */
-
 button{
-padding:14px 32px;
-margin-top:25px;
-font-size:18px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-
-background:linear-gradient(45deg,#4ea8de,#9d4edd);
-color:white;
-
-box-shadow:0 0 12px rgba(150,100,255,0.6);
-transition:.2s;
+  padding:14px 32px;
+  margin-top:25px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#4ea8de,#9d4edd);
+  color:white;
+  box-shadow:0 0 12px rgba(150,100,255,0.6);
+  transition:.2s;
 }
 
 button:hover{
-transform:scale(1.05);
+  transform:scale(1.05);
 }
 
 /* popup */
-
 .popup{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(.9);
-
-background:#111;
-padding:28px 30px;
-border-radius:15px;
-
-font-size:17px;
-
-display:none;
-opacity:0;
-
-box-shadow:0 0 25px #9d4edd;
-
-max-width:85%;
-line-height:1.6;
-
-transition:.4s;
-z-index:3;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.9);
+  background:#111;
+  padding:28px 30px;
+  border-radius:15px;
+  font-size:17px;
+  display:none;
+  opacity:0;
+  box-shadow:0 0 25px #9d4edd;
+  max-width:85%;
+  line-height:1.6;
+  transition:.4s;
+  z-index:7;
 }
 
 .popup.show{
-display:block;
-opacity:1;
-transform:translate(-50%,-50%) scale(1);
+  display:block;
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
 }
 
 /* hearts explosion */
-
 .heart{
-position:absolute;
-font-size:28px;
-animation:explode 1.6s ease forwards;
-pointer-events:none;
-z-index:2;
+  position:absolute;
+  font-size:28px;
+  animation:explode 1.6s ease forwards;
+  pointer-events:none;
+  z-index:6;
 }
 
 @keyframes explode{
-0%{
-transform:translate(0,0) scale(1);
-opacity:1;
-}
-100%{
-transform:translate(var(--x),var(--y)) scale(1.4);
-opacity:0;
-}
+  0%{
+    transform:translate(0,0) scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:translate(var(--x),var(--y)) scale(1.4);
+    opacity:0;
+  }
 }
 
 /* final reveal */
-
 .final-message{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(.5);
-text-align:center;
-opacity:0;
-transition:1.5s;
-z-index:4;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.5);
+  text-align:center;
+  opacity:0;
+  transition:1.5s;
+  z-index:8;
 }
 
 .final-message.show{
-opacity:1;
-transform:translate(-50%,-50%) scale(1);
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
 }
 
 .final-message h2{
-font-size:clamp(36px,8vw,70px);
-text-shadow:
-0 0 10px #fff,
-0 0 20px #9d4edd,
-0 0 40px #7b2cbf;
+  font-size:clamp(36px,8vw,70px);
+  text-shadow:
+  0 0 10px #fff,
+  0 0 20px #9d4edd,
+  0 0 40px #7b2cbf;
 }
 
 .final-message p{
-font-size:clamp(22px,5vw,32px);
-margin-top:10px;
+  font-size:clamp(22px,5vw,32px);
+  margin-top:10px;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <div class="fade-layer" id="fadeLayer"></div>
 
+<!-- first page bg music -->
 <audio id="bgMusic" preload="auto" loop>
-<source src="love.mp3" type="audio/mpeg">
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<!-- video section bg music -->
+<audio id="videoMusic" preload="auto" loop>
+  <source src="finalbg.mp3" type="audio/mpeg">
 </audio>
 
 <div class="main" id="mainContent">
 
-<h1>Thank You 💜 My Love</h1>
+  <h1>Thank You 💜 My Love</h1>
 
-<p id="typing"></p>
+  <p id="typing"></p>
 
-<button onclick="foreverClick()">
-Forever 💙
-</button>
+  <!-- NEW: video player below title/text -->
+  <div class="video-section">
+    <div class="video-box">
+      <video id="memoryVideo" playsinline muted preload="auto"></video>
+    </div>
+    <div class="video-caption" id="videoCaption">Best moments with you 💜</div>
+  </div>
+
+  <button onclick="foreverClick()">
+    Forever 💙
+  </button>
 
 </div>
 
 <div class="popup" id="popupMessage">
-
-This message will be erased in 3 hours…
-
-<br><br>
-
-Unna naan romba special ah paakuren.
-Nee en life la vandhadhu enakku romba periya happiness.
-
-<br><br>
-
-Maybe this message will disappear…
-but my care for you will never disappear 💜
-
+  This message will be erased in 3 hours…
+  <br><br>
+  Unna naan romba special ah paakuren.
+  Nee en life la vandhadhu enakku romba periya happiness.
+  <br><br>
+  Maybe this message will disappear…
+  but my care for you will never disappear 💜
 </div>
 
 <div class="final-message" id="finalReveal">
-<h2>SUBHA 💜 ARUL</h2>
-<p>Forever</p>
+  <h2>SUBHA 💜 ARUL</h2>
+  <p>Forever</p>
 </div>
 
 <script>
-
 /* typing text */
-
-const text="Maybe this message will disappear… but my care for you will never disappear ❤️"
-let i=0
+const text = "Maybe this message will disappear… but my care for you will never disappear ❤️";
+let i = 0;
 
 function typeText(){
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i)
-i++
-setTimeout(typeText,45)
+  if(i < text.length){
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText,45);
+  }
 }
-}
-
-typeText()
+typeText();
 
 /* falling stars */
-
 function createStar(){
-const star=document.createElement("div")
-star.className="star"
-star.style.left=Math.random()*100+"vw"
-star.style.animationDuration=(Math.random()*3+2)+"s"
-document.body.appendChild(star)
-setTimeout(()=>star.remove(),5000)
+  const star = document.createElement("div");
+  star.className = "star";
+  star.style.left = Math.random()*100 + "vw";
+  star.style.animationDuration = (Math.random()*3+2) + "s";
+  document.body.appendChild(star);
+  setTimeout(()=>star.remove(),5000);
 }
-
-setInterval(createStar,700)
+setInterval(createStar,700);
 
 /* floating hearts */
-
 function floatHearts(){
-const heart=document.createElement("div")
-heart.className="float-heart"
-heart.innerHTML="💜"
-heart.style.left=Math.random()*100+"vw"
-document.body.appendChild(heart)
-setTimeout(()=>heart.remove(),10000)
+  const heart = document.createElement("div");
+  heart.className = "float-heart";
+  heart.innerHTML = "💜";
+  heart.style.left = Math.random()*100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+}
+setInterval(floatHearts,3000);
+
+/* music */
+const music = document.getElementById("bgMusic");
+const videoMusic = document.getElementById("videoMusic");
+
+music.volume = 0.5;
+videoMusic.volume = 0.45;
+
+/* start audio on first user tap */
+document.body.addEventListener("click", () => {
+  music.play().catch(()=>{});
+  startVideoSequence();
+}, { once:true });
+
+/* video playlist */
+const videoList = [
+  { src:"01.mp4", caption:"Our sweet beginning 💜" },
+  { src:"02.mp4", caption:"Little smiles, big memories ✨" },
+  { src:"03.mp4", caption:"Moments I never want to lose 💖" },
+  { src:"04.mp4", caption:"Every second felt special 🌸" },
+  { src:"05.mp4", caption:"You made everything beautiful 💫" },
+  { src:"06.mp4", caption:"A memory I keep in my heart 💜" },
+  { src:"07.mp4", caption:"Best part of my days 🌙" },
+  { src:"08.mp4", caption:"Love in every frame 💕" },
+  { src:"09.mp4", caption:"My favorite person, always 💙" },
+  { src:"10.mp4", caption:"Forever my precious memory 💜" },
+  { src:"11.mp4", caption:"One more beautiful moment ✨" },
+  { src:"12.mp4", caption:"Still falling for you everyday 💖" }
+];
+
+const memoryVideo = document.getElementById("memoryVideo");
+const videoCaption = document.getElementById("videoCaption");
+
+let currentVideoIndex = 0;
+let videoStarted = false;
+
+/* memories.html style auto sequence with fade */
+function startVideoSequence(){
+  if(videoStarted) return;
+  videoStarted = true;
+  playMemoryClip(currentVideoIndex);
 }
 
-setInterval(floatHearts,3000)
+function playMemoryClip(index){
+  const clip = videoList[index];
+  if(!clip) return;
 
-/* music start */
+  memoryVideo.classList.remove("show");
+  memoryVideo.pause();
 
-const music=document.getElementById("bgMusic")
-music.volume=.5
+  setTimeout(() => {
+    memoryVideo.src = clip.src;
+    memoryVideo.muted = true;   // DO NOT PLAY VIDEO AUDIO
+    memoryVideo.playbackRate = 0.85; // slight slow motion feel
+    videoCaption.innerHTML = clip.caption;
 
-document.body.addEventListener("click",()=>{
-music.play().catch(()=>{})
-},{once:true})
+    memoryVideo.load();
+
+    memoryVideo.onloadedmetadata = () => {
+      let startAt = 0;
+      let endAt = memoryVideo.duration;
+
+      /* if clip is very long, show a shorter slow cinematic portion */
+      if(memoryVideo.duration > 8){
+        startAt = 0.3;
+        endAt = 8;
+      }
+
+      memoryVideo.currentTime = startAt;
+      memoryVideo.play().then(() => {
+        memoryVideo.classList.add("show");
+      }).catch(()=>{});
+
+      const visibleTime = Math.max(3000, (endAt - startAt) * 1000);
+
+      setTimeout(() => {
+        memoryVideo.classList.remove("show");
+
+        setTimeout(() => {
+          memoryVideo.pause();
+          currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+          playMemoryClip(currentVideoIndex);
+        }, 2200);
+
+      }, visibleTime);
+    };
+  }, 400);
+}
 
 /* button click */
-
 function foreverClick(){
+  loveExplosion();
 
-loveExplosion()
+  const popup = document.getElementById("popupMessage");
+  popup.classList.add("show");
 
-const popup=document.getElementById("popupMessage")
+  /* switch from first bg music to final video-section bg music */
+  fadeAudio(music, 1200, () => {
+    music.pause();
+    music.currentTime = 0;
+    videoMusic.play().catch(()=>{});
+  });
 
-popup.classList.add("show")
-
-setTimeout(()=>{
-
-popup.classList.remove("show")
-
-document.getElementById("mainContent").style.display="none"
-
-document.getElementById("fadeLayer").classList.add("show")
-
-showFinal()
-
-},5000)
-
+  setTimeout(() => {
+    popup.classList.remove("show");
+    document.getElementById("mainContent").style.display = "none";
+    document.getElementById("fadeLayer").classList.add("show");
+    showFinal();
+  }, 5000);
 }
 
 /* heart explosion */
-
 function loveExplosion(){
-
-for(let i=0;i<45;i++){
-
-const heart=document.createElement("div")
-
-heart.innerHTML="💖"
-heart.className="heart"
-
-heart.style.left="50%"
-heart.style.top="50%"
-
-heart.style.setProperty("--x",(Math.random()*900-450)+"px")
-heart.style.setProperty("--y",(Math.random()*900-450)+"px")
-
-document.body.appendChild(heart)
-
-setTimeout(()=>heart.remove(),1600)
-
+  for(let i=0;i<45;i++){
+    const heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.className="heart";
+    heart.style.left="50%";
+    heart.style.top="50%";
+    heart.style.setProperty("--x",(Math.random()*900-450)+"px");
+    heart.style.setProperty("--y",(Math.random()*900-450)+"px");
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),1600);
+  }
 }
 
+/* helper audio fade */
+function fadeAudio(audio, intervalTime = 200, callback){
+  const fade = setInterval(() => {
+    if(audio.volume > 0.03){
+      audio.volume -= 0.03;
+    }else{
+      audio.volume = 0;
+      clearInterval(fade);
+      if(callback) callback();
+    }
+  }, intervalTime);
 }
 
 /* final reveal */
-
 function showFinal(){
+  document.getElementById("finalReveal").classList.add("show");
 
-document.getElementById("finalReveal").classList.add("show")
+  /* fade second music */
+  setTimeout(() => {
+    fadeAudio(videoMusic, 250, () => {
+      videoMusic.pause();
+      videoMusic.currentTime = 0;
+    });
+  }, 3500);
 
-/* fade music */
-
-let fade=setInterval(()=>{
-if(music.volume>0.02){
-music.volume-=0.02
-}else{
-music.volume=0
-clearInterval(fade)
+  /* fade page */
+  setTimeout(() => {
+    document.body.style.opacity = "0";
+  }, 8000);
 }
-},200)
-
-/* fade page */
-
-setTimeout(()=>{
-document.body.style.opacity="0"
-},8000)
-
-}
-
 </script>
 
 </body>
