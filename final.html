@@ -256,23 +256,18 @@ button:hover{
 
 <div class="fade-layer" id="fadeLayer"></div>
 
-<!-- first page bg music -->
 <audio id="bgMusic" preload="auto" loop>
   <source src="love.mp3" type="audio/mpeg">
 </audio>
 
-<!-- video section bg music -->
 <audio id="videoMusic" preload="auto" loop>
   <source src="finalbg.mp3" type="audio/mpeg">
 </audio>
 
 <div class="main" id="mainContent">
-
   <h1>Thank You 💜 My Love</h1>
-
   <p id="typing"></p>
 
-  <!-- NEW: video player below title/text -->
   <div class="video-section">
     <div class="video-box">
       <video id="memoryVideo" playsinline muted preload="auto"></video>
@@ -283,7 +278,6 @@ button:hover{
   <button onclick="foreverClick()">
     Forever 💙
   </button>
-
 </div>
 
 <div class="popup" id="popupMessage">
@@ -293,9 +287,7 @@ button:hover{
   Nee en life la vandhadhu enakku romba periya happiness.
   <br><br>
   Maybe this message will disappear…
-  but my care for you will never disappear 💜<br><br>
-
-  
+  but my care for you will never disappear 💜
 </div>
 
 <div class="final-message" id="finalReveal">
@@ -305,7 +297,7 @@ button:hover{
 
 <script>
 /* typing text */
-const text = "Maybe this message will disappear… but my care for you will never disappear ❤️       Tap to Play";
+const text = "Maybe this message will disappear… but my care for you will never disappear ❤️ Tap to Play";
 let i = 0;
 
 function typeText(){
@@ -352,27 +344,53 @@ document.body.addEventListener("click", () => {
   startVideoSequence();
 }, { once:true });
 
-/* video playlist */
-const videoList = [
-  { src:"slomo/IE (1).mp4", caption:"Our sweet beginning 💜" },
-  { src:"slomo/IE (3).mp4", caption:"Little smiles, big memories ✨" },
-  { src:"03.mp4", caption:"Moments I never want to lose 💖" },
-  { src:"04.mp4", caption:"Every second felt special 🌸" },
-  { src:"05.mp4", caption:"You made everything beautiful 💫" },
-  { src:"06.mp4", caption:"A memory I keep in my heart 💜" },
-  { src:"07.mp4", caption:"Best part of my days 🌙" },
-  { src:"08.mp4", caption:"Love in every frame 💕" },
-  { src:"09.mp4", caption:"My favorite person, always 💙" },
-  { src:"10.mp4", caption:"Forever my precious memory 💜" },
-  { src:"11.mp4", caption:"One more beautiful moment ✨" },
-  { src:"12.mp4", caption:"Still falling for you everyday 💖" }
+/* 32 video playlist auto-generated */
+const captions = [
+  "Our sweet beginning 💜",
+  "A little moment, a big memory ✨",
+  "Little smiles, big memories ✨",
+  "You made this moment beautiful 💖",
+  "One more memory to keep forever 💜",
+  "My favorite part of the day 💙",
+  "A soft moment full of love 🌸",
+  "Every frame feels special ✨",
+  "You are my sweetest memory 💕",
+  "This smile stays in my heart 💜",
+  "Love in the smallest moments 🌙",
+  "A memory I never want to lose 💖",
+  "Still falling for you everyday 💜",
+  "You made ordinary moments magical ✨",
+  "A beautiful second, forever mine 💙",
+  "You are the peace in my heart 💜",
+  "This memory still feels alive 🌸",
+  "Every look of yours is special 💕",
+  "The kind of moment I replay forever ✨",
+  "A soft piece of us, captured 💜",
+  "My heart smiles at this memory 💖",
+  "One clip, so many feelings 💙",
+  "The sweetness of us in one frame 🌙",
+  "This moment will stay forever 💜",
+  "Love looks beautiful on you ✨",
+  "A memory wrapped in love 💕",
+  "You are my forever favorite 💖",
+  "Another little memory, another big smile 💜",
+  "My world feels softer with you 🌸",
+  "This is what love feels like 💙",
+  "A special memory of my special person 💜",
+  "Forever starts with moments like this ✨"
 ];
+
+const videoList = Array.from({ length: 32 }, (_, i) => ({
+  src: `slomo/IE (${i + 1}).mp4`,
+  caption: captions[i] || `Beautiful memory ${i + 1} 💜`
+}));
 
 const memoryVideo = document.getElementById("memoryVideo");
 const videoCaption = document.getElementById("videoCaption");
 
 let currentVideoIndex = 0;
 let videoStarted = false;
+let clipTimer = null;
 
 /* memories.html style auto sequence with fade */
 function startVideoSequence(){
@@ -385,46 +403,57 @@ function playMemoryClip(index){
   const clip = videoList[index];
   if(!clip) return;
 
+  clearTimeout(clipTimer);
   memoryVideo.classList.remove("show");
   memoryVideo.pause();
 
   setTimeout(() => {
     memoryVideo.src = clip.src;
-    memoryVideo.muted = true;   // DO NOT PLAY VIDEO AUDIO
-    memoryVideo.playbackRate = 0.85; // slight slow motion feel
+    memoryVideo.muted = true;
+    memoryVideo.volume = 0;
+    memoryVideo.playbackRate = 0.85;
     videoCaption.innerHTML = clip.caption;
-
     memoryVideo.load();
 
     memoryVideo.onloadedmetadata = () => {
       let startAt = 0;
       let endAt = memoryVideo.duration;
 
-      /* if clip is very long, show a shorter slow cinematic portion */
       if(memoryVideo.duration > 8){
         startAt = 0.3;
         endAt = 8;
       }
 
       memoryVideo.currentTime = startAt;
+
       memoryVideo.play().then(() => {
         memoryVideo.classList.add("show");
-      }).catch(()=>{});
+      }).catch(() => {
+        goNextClip();
+      });
 
       const visibleTime = Math.max(3000, (endAt - startAt) * 1000);
 
-      setTimeout(() => {
+      clipTimer = setTimeout(() => {
         memoryVideo.classList.remove("show");
 
         setTimeout(() => {
           memoryVideo.pause();
-          currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
-          playMemoryClip(currentVideoIndex);
+          goNextClip();
         }, 2200);
 
       }, visibleTime);
     };
+
+    memoryVideo.onerror = () => {
+      goNextClip();
+    };
   }, 400);
+}
+
+function goNextClip(){
+  currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
+  playMemoryClip(currentVideoIndex);
 }
 
 /* button click */
@@ -434,7 +463,6 @@ function foreverClick(){
   const popup = document.getElementById("popupMessage");
   popup.classList.add("show");
 
-  /* switch from first bg music to final video-section bg music */
   fadeAudio(music, 1200, () => {
     music.pause();
     music.currentTime = 0;
@@ -452,11 +480,11 @@ function foreverClick(){
 /* heart explosion */
 function loveExplosion(){
   for(let i=0;i<45;i++){
-    const heart=document.createElement("div");
-    heart.innerHTML="💖";
-    heart.className="heart";
-    heart.style.left="50%";
-    heart.style.top="50%";
+    const heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.className = "heart";
+    heart.style.left = "50%";
+    heart.style.top = "50%";
     heart.style.setProperty("--x",(Math.random()*900-450)+"px");
     heart.style.setProperty("--y",(Math.random()*900-450)+"px");
     document.body.appendChild(heart);
@@ -481,7 +509,6 @@ function fadeAudio(audio, intervalTime = 200, callback){
 function showFinal(){
   document.getElementById("finalReveal").classList.add("show");
 
-  /* fade second music */
   setTimeout(() => {
     fadeAudio(videoMusic, 250, () => {
       videoMusic.pause();
@@ -489,7 +516,6 @@ function showFinal(){
     });
   }, 3500);
 
-  /* fade page */
   setTimeout(() => {
     document.body.style.opacity = "0";
   }, 8000);
