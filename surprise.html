@@ -209,7 +209,7 @@ opacity:.9;
 <body oncontextmenu="return false">
 
 <audio id="bgMusic" loop preload="auto">
-<source src="bg.mp3" type="audio/mpeg">
+  <source src="bg.mp3" type="audio/mpeg">
 </audio>
 
 <div class="heart" style="left:5%">💜</div>
@@ -285,7 +285,7 @@ Memories 📸
   <div class="video-container">
     <span class="close-video" onclick="closeVideoPopup()">✖</span>
 
-    <video id="wishVideo" controls autoplay playsinline></video>
+    <video id="wishVideo" controls autoplay playsinline preload="auto"></video>
 
     <div class="video-controls-row">
       <button onclick="prevWishVideo()">⏮ Prev</button>
@@ -298,9 +298,7 @@ Memories 📸
 </div>
 
 <script>
-document.addEventListener("dragstart",e=>{
-  e.preventDefault();
-});
+document.addEventListener("dragstart",e=>e.preventDefault());
 
 document.addEventListener("keydown",function(e){
   if(e.keyCode==123) return false;
@@ -309,14 +307,18 @@ document.addEventListener("keydown",function(e){
   if(e.ctrlKey && e.keyCode==85) return false;
 });
 
-const music=document.getElementById("bgMusic");
-music.volume=0.2;
+const music = document.getElementById("bgMusic");
+const wishVideo = document.getElementById("wishVideo");
+const videoPopup = document.getElementById("videoPopup");
+const videoCount = document.getElementById("videoCount");
+const musicToggleBtn = document.getElementById("musicToggleBtn");
 
-document.body.addEventListener("click",()=>{
-  music.play().catch(()=>{});
-},{once:true});
+const normalBgVolume = 0.5;
+const popupBgVolume = 0.2;
 
-const names=[
+music.volume = popupBgVolume;
+
+const names = [
   "KD Queen 👑",
   "Kaaruvachi 💜",
   "Copy Cat ✨",
@@ -324,12 +326,11 @@ const names=[
   "Wifey 💙"
 ];
 
-let index=0;
-
+let index = 0;
 function showName(){
-  document.getElementById("nickname").textContent=names[index];
+  document.getElementById("nickname").textContent = names[index];
   index++;
-  if(index<names.length){
+  if(index < names.length){
     setTimeout(showName,1800);
   }
 }
@@ -353,7 +354,7 @@ function celebrate(){
     heart.style.fontSize="20px";
     heart.style.animation="fall 3s linear";
     document.body.appendChild(heart);
-    setTimeout(()=>{heart.remove()},3000);
+    setTimeout(()=>heart.remove(),3000);
   }
 }
 
@@ -365,39 +366,46 @@ style.innerHTML=`
 }`;
 document.head.appendChild(style);
 
+/* Use relative paths from surprise.html */
 const wishVideos = [
-  "Arul-AM/kaaruvachi/Wishes/01 (1).mp4",
-  "wishes/02.mp4",
-  "wishes/03.mp4",
-  "wishes/04.mp4",
-  "wishes/05.mp4",
-  "wishes/06.mp4",
-  "wishes/07.mp4",
-  "wishes/08.mp4",
-  "wishes/09.mp4",
-  "wishes/10.mp4",
-  "wishes/11.mp4",
-  "wishes/12.mp4",
-  "wishes/13.mp4",
-  "wishes/14.mp4",
-  "wishes/15.mp4"
+  "Wishes/01 (1).mp4",
+  "Wishes/02.mp4",
+  "Wishes/03.mp4",
+  "Wishes/04.mp4",
+  "Wishes/05.mp4",
+  "Wishes/06.mp4",
+  "Wishes/07.mp4",
+  "Wishes/08.mp4",
+  "Wishes/09.mp4",
+  "Wishes/10.mp4",
+  "Wishes/11.mp4",
+  "Wishes/12.mp4",
+  "Wishes/13.mp4",
+  "Wishes/14.mp4",
+  "Wishes/15.mp4"
 ];
 
 let currentWishIndex = 0;
 let bgMusicEnabled = true;
-
-const wishVideo = document.getElementById("wishVideo");
-const videoPopup = document.getElementById("videoPopup");
-const videoCount = document.getElementById("videoCount");
-const musicToggleBtn = document.getElementById("musicToggleBtn");
 
 function updateVideoCount(){
   videoCount.textContent = `${currentWishIndex + 1} / ${wishVideos.length}`;
 }
 
 function applyVolumes(){
-  music.volume = bgMusicEnabled ? 0.2 : 0;
-  wishVideo.volume = 1.0;
+  if(!bgMusicEnabled){
+    music.volume = 0;
+  }else{
+    music.volume = videoPopup.style.display === "flex" ? popupBgVolume : normalBgVolume;
+  }
+  wishVideo.volume = 1;
+}
+
+function tryPlayMedia(){
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
+  wishVideo.play().catch(()=>{});
 }
 
 function loadWishVideo(i){
@@ -407,14 +415,18 @@ function loadWishVideo(i){
   currentWishIndex = i;
   wishVideo.pause();
   wishVideo.src = wishVideos[currentWishIndex];
-  wishVideo.load();
   updateVideoCount();
   applyVolumes();
-  wishVideo.play().catch(()=>{});
+  wishVideo.load();
+
+  wishVideo.onloadeddata = () => {
+    wishVideo.play().catch(()=>{});
+  };
 }
 
 function openVideoPopup(){
   videoPopup.style.display = "flex";
+  applyVolumes();
   loadWishVideo(currentWishIndex);
   if(bgMusicEnabled){
     music.play().catch(()=>{});
@@ -425,6 +437,10 @@ function closeVideoPopup(){
   wishVideo.pause();
   wishVideo.currentTime = 0;
   videoPopup.style.display = "none";
+  applyVolumes();
+  if(bgMusicEnabled){
+    music.play().catch(()=>{});
+  }
 }
 
 function nextWishVideo(){
@@ -447,19 +463,25 @@ function toggleBgMusic(){
   }
 }
 
-wishVideo.addEventListener("ended",function(){
+wishVideo.addEventListener("ended", function(){
   nextWishVideo();
 });
 
-wishVideo.addEventListener("play",function(){
-  applyVolumes();
+wishVideo.addEventListener("error", function(){
+  console.log("Video failed:", wishVideos[currentWishIndex]);
+  nextWishVideo();
 });
 
 window.addEventListener("load", () => {
   setTimeout(() => {
     openVideoPopup();
-  }, 500);
+  }, 400);
 });
+
+/* Helps autoplay on browsers that require first tap */
+document.addEventListener("click", () => {
+  tryPlayMedia();
+}, { once:true });
 </script>
 
 </body>
