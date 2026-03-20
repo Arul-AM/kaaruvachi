@@ -110,7 +110,6 @@ position:relative;
 z-index:1;
 margin-top:30px;
 font-size:clamp(20px,6vw,30px);
-text-shadow:0 0 10px rgba(157,78,221,.4);
 }
 
 /* gallery */
@@ -123,7 +122,7 @@ grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
 gap:20px;
 padding:20px;
 width:90%;
-max-width:1100px;
+max-width:1000px;
 margin:auto;
 animation:fadeGallery 1.5s ease;
 }
@@ -158,12 +157,11 @@ transform:scale(1.05) rotate(0deg);
 
 .photo-card img{
 width:100%;
-aspect-ratio:4 / 5;
+aspect-ratio:1 / 1;
 object-fit:cover;
 object-position:center;
 border-radius:5px;
 display:block;
-
 pointer-events:none;
 user-select:none;
 -webkit-user-drag:none;
@@ -179,6 +177,8 @@ width:100%;
 height:100%;
 }
 
+/* caption */
+
 .caption{
 color:black;
 margin-top:6px;
@@ -191,28 +191,38 @@ font-size:13px;
 position:relative;
 z-index:1;
 margin-top:25px;
+padding:0 16px;
 }
 
 .video-wrap{
-width:90%;
+width:100%;
 max-width:600px;
 margin:0 auto;
-border-radius:15px;
+border-radius:18px;
 overflow:hidden;
 box-shadow:0 0 15px #9d4edd;
-background:black;
+background:#000;
 }
 
 .custom-video{
 position:relative;
 }
 
-.video-wrap video{
+#memoryVideo{
 width:100%;
 display:block;
-border-radius:15px;
-background:black;
+border-radius:18px;
+background:#000;
 outline:none;
+}
+
+/* hide default controls until play */
+#memoryVideo::-webkit-media-controls{
+display:none !important;
+}
+
+#memoryVideo.show-controls::-webkit-media-controls{
+display:flex !important;
 }
 
 .play-btn{
@@ -238,7 +248,7 @@ font-size:13px;
 opacity:.8;
 }
 
-/* buttons */
+/* button */
 
 button{
 position:relative;
@@ -273,7 +283,6 @@ z-index:999;
 max-width:90%;
 max-height:90%;
 border-radius:15px;
-object-fit:contain;
 }
 
 .close{
@@ -338,7 +347,7 @@ disablePictureInPicture
 disableRemotePlayback
 oncontextmenu="return false"
 >
-<source src="mine/mine.mp4" type="video/mp4">
+<source src="Mine/mine.mp4" type="video/mp4">
 </video>
 
 <button class="play-btn" id="playBtn" type="button">▶ Play Video</button>
@@ -378,45 +387,50 @@ oncontextmenu="return false"
 
 <div class="gallery">
 
-<div class="photo-card"><img src="IE (1).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 01</div></div>
-<div class="photo-card"><img src="IE (2).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 02</div></div>
-<div class="photo-card"><img src="IE (3).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 03</div></div>
-<div class="photo-card"><img src="IE (4).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 04</div></div>
+<div class="photo-card"><img src="Gallery/IE (1).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 01</div></div>
+<div class="photo-card"><img src="Gallery/IE (2).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 02</div></div>
+<div class="photo-card"><img src="Gallery/IE (3).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 03</div></div>
+<div class="photo-card"><img src="Gallery/IE (4).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 04</div></div>
 
-<div class="photo-card"><img src="IE (5).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 05</div></div>
-<div class="photo-card"><img src="IE (6).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 06</div></div>
-<div class="photo-card"><img src="IE (7).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 07</div></div>
-<div class="photo-card"><img src="IE (8).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 08</div></div>
+<div class="photo-card"><img src="Gallery/IE (5).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 05</div></div>
+<div class="photo-card"><img src="Gallery/IE (6).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 06</div></div>
+<div class="photo-card"><img src="Gallery/IE (7).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 07</div></div>
+<div class="photo-card"><img src="Gallery/IE (8).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 08</div></div>
 
-<div class="photo-card"><img src="IE (9).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 09</div></div>
-<div class="photo-card"><img src="IE (10).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 10</div></div>
-<div class="photo-card"><img src="IE (11).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 11</div></div>
-<div class="photo-card"><img src="IE (12).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 12</div></div>
+<div class="photo-card"><img src="Gallery/IE (9).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 09</div></div>
+<div class="photo-card"><img src="Gallery/IE (10).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 10</div></div>
+<div class="photo-card"><img src="Gallery/IE (11).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 11</div></div>
+<div class="photo-card"><img src="Gallery/IE (12).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 12</div></div>
 
-<div class="photo-card"><img src="IE (13).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 13</div></div>
-<div class="photo-card"><img src="IE (14).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 14</div></div>
-<div class="photo-card"><img src="IE (15).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 15</div></div>
-<div class="photo-card"><img src="IE (16).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 16</div></div>
+<div class="photo-card"><img src="Gallery/IE (13).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 13</div></div>
+<div class="photo-card"><img src="Gallery/IE (14).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 14</div></div>
+<div class="photo-card"><img src="Gallery/IE (15).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 15</div></div>
+<div class="photo-card"><img src="Gallery/IE (16).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 16</div></div>
 
-<div class="photo-card"><img src="IE (17).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 17</div></div>
-<div class="photo-card"><img src="IE (18).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 18</div></div>
-<div class="photo-card"><img src="IE (19).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 19</div></div>
-<div class="photo-card"><img src="IE (20).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 20</div></div>
+<div class="photo-card"><img src="Gallery/IE (17).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 17</div></div>
+<div class="photo-card"><img src="Gallery/IE (18).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 18</div></div>
+<div class="photo-card"><img src="Gallery/IE (19).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 19</div></div>
+<div class="photo-card"><img src="Gallery/IE (20).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 20</div></div>
 
-<div class="photo-card"><img src="IE (21).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 21</div></div>
-<div class="photo-card"><img src="IE (22).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 22</div></div>
-<div class="photo-card"><img src="IE (23).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 23</div></div>
-<div class="photo-card"><img src="IE (24).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 24</div></div>
+<div class="photo-card"><img src="Gallery/IE (21).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 21</div></div>
+<div class="photo-card"><img src="Gallery/IE (22).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 22</div></div>
+<div class="photo-card"><img src="Gallery/IE (23).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 23</div></div>
+<div class="photo-card"><img src="Gallery/IE (24).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 24</div></div>
 
-<div class="photo-card"><img src="IE (25).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 25</div></div>
-<div class="photo-card"><img src="IE (26).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 26</div></div>
-<div class="photo-card"><img src="IE (27).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 27</div></div>
-<div class="photo-card"><img src="IE (28).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 28</div></div>
+<div class="photo-card"><img src="Gallery/IE (25).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 25</div></div>
+<div class="photo-card"><img src="Gallery/IE (26).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 26</div></div>
+<div class="photo-card"><img src="Gallery/IE (27).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 27</div></div>
+<div class="photo-card"><img src="Gallery/IE (28).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 28</div></div>
 
-<div class="photo-card"><img src="IE (29).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 29</div></div>
-<div class="photo-card"><img src="IE (30).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 30</div></div>
-<div class="photo-card"><img src="IE (31).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 31</div></div>
-<div class="photo-card"><img src="IE (32).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 32</div></div>
+<div class="photo-card"><img src="Gallery/IE (29).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 29</div></div>
+<div class="photo-card"><img src="Gallery/IE (30).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 30</div></div>
+<div class="photo-card"><img src="Gallery/IE (31).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 31</div></div>
+<div class="photo-card"><img src="Gallery/IE (32).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 32</div></div>
+
+<div class="photo-card"><img src="Gallery/IE (33).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 33</div></div>
+<div class="photo-card"><img src="Gallery/IE (34).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 34</div></div>
+<div class="photo-card"><img src="Gallery/IE (35).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 35</div></div>
+<div class="photo-card"><img src="Gallery/IE (36).jpeg" loading="lazy" alt=""><div class="caption">Best of Year 36</div></div>
 
 </div>
 
@@ -503,6 +517,7 @@ music.play().catch(()=>{})
 },{once:true})
 
 playBtn.addEventListener("click",()=>{
+video.classList.add("show-controls")
 video.setAttribute("controls","controls")
 video.play().catch(()=>{})
 playBtn.style.display="none"
@@ -514,7 +529,7 @@ music.pause()
 })
 
 video.addEventListener("pause",()=>{
-if(video.currentTime < video.duration){
+if(!video.ended && video.currentTime > 0){
 playBtn.style.display="block"
 music.play().catch(()=>{})
 }
