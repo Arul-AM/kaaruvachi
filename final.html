@@ -32,7 +32,6 @@ body{
   position:relative;
 }
 
-/* falling stars */
 .star{
   position:fixed;
   top:-10px;
@@ -51,7 +50,6 @@ body{
   100%{transform:translateY(110vh) translateX(-200px) rotate(45deg);opacity:0;}
 }
 
-/* floating hearts */
 .float-heart{
   position:fixed;
   font-size:22px;
@@ -67,7 +65,6 @@ body{
   100%{transform:translateY(-10vh);opacity:0;}
 }
 
-/* dark overlay fade */
 .fade-layer{
   position:fixed;
   inset:0;
@@ -82,7 +79,6 @@ body{
   opacity:.85;
 }
 
-/* main section */
 .main{
   display:flex;
   flex-direction:column;
@@ -92,14 +88,12 @@ body{
   max-width:950px;
 }
 
-/* title */
 h1{
   font-size:clamp(28px,7vw,48px);
   margin-bottom:20px;
   text-shadow:0 0 10px #9d4edd;
 }
 
-/* text */
 p{
   font-size:clamp(16px,4vw,22px);
   max-width:90%;
@@ -107,7 +101,6 @@ p{
   margin-bottom:10px;
 }
 
-/* video section */
 .video-section{
   width:100%;
   max-width:760px;
@@ -134,15 +127,13 @@ video{
   height:100%;
   object-fit:cover;
   display:block;
-  opacity:0;
-  transition:opacity 2s ease, transform 8s ease;
-  transform:scale(1.04);
+  opacity:1;
+  transition:opacity 1.2s ease;
   background:#000;
 }
 
-video.show{
-  opacity:1;
-  transform:scale(1);
+video.fade-out{
+  opacity:0;
 }
 
 .video-caption{
@@ -158,7 +149,6 @@ video.show{
   opacity:.8;
 }
 
-/* button */
 button{
   padding:14px 32px;
   margin-top:25px;
@@ -176,7 +166,6 @@ button:hover{
   transform:scale(1.05);
 }
 
-/* popup */
 .popup{
   position:fixed;
   top:50%;
@@ -201,7 +190,6 @@ button:hover{
   transform:translate(-50%,-50%) scale(1);
 }
 
-/* hearts explosion */
 .heart{
   position:absolute;
   font-size:28px;
@@ -221,7 +209,6 @@ button:hover{
   }
 }
 
-/* final reveal */
 .final-message{
   position:fixed;
   top:50%;
@@ -251,11 +238,10 @@ button:hover{
   margin-top:10px;
 }
 
-/* tap overlay */
 .tap-overlay{
   position:absolute;
   inset:0;
-  display:none;
+  display:flex;
   align-items:center;
   justify-content:center;
   background:rgba(0,0,0,.35);
@@ -266,8 +252,8 @@ button:hover{
   backdrop-filter:blur(2px);
 }
 
-.tap-overlay.show{
-  display:flex;
+.tap-overlay.hide{
+  display:none;
 }
 
 @media(max-width:600px){
@@ -304,7 +290,7 @@ button:hover{
       <div class="tap-overlay" id="tapOverlay">Tap to Play 💜</div>
     </div>
     <div class="video-caption" id="videoCaption">Best moments with you 💜</div>
-    <div class="video-note">Tap To Play > </div>
+    <div class="video-note">Tap To Play ></div>
   </div>
 
   <button onclick="foreverClick()">Forever 💙</button>
@@ -326,7 +312,6 @@ button:hover{
 </div>
 
 <script>
-/* typing text */
 const text = "Maybe this message will disappear… but my care for you will never disappear ❤️";
 let typeIndex = 0;
 
@@ -339,7 +324,6 @@ function typeText(){
 }
 typeText();
 
-/* stars */
 function createStar(){
   const star = document.createElement("div");
   star.className = "star";
@@ -350,7 +334,6 @@ function createStar(){
 }
 setInterval(createStar, 700);
 
-/* floating hearts */
 function floatHearts(){
   const heart = document.createElement("div");
   heart.className = "float-heart";
@@ -361,7 +344,6 @@ function floatHearts(){
 }
 setInterval(floatHearts, 3000);
 
-/* music */
 const music = document.getElementById("bgMusic");
 const videoMusic = document.getElementById("videoMusic");
 const memoryVideo = document.getElementById("memoryVideo");
@@ -375,7 +357,6 @@ let userInteracted = false;
 let videoStarted = false;
 let sequenceTimeout = null;
 
-/* edit this list only */
 const videoList = [
   { src:"slomo/IE  (1).mp4", caption:"Our sweet beginning 💜" },
   { src:"slomo/IE  (2).mp4", caption:"A little moment, a big memory ✨" },
@@ -416,10 +397,9 @@ let currentVideoIndex = 0;
 function startExperience(){
   if(userInteracted) return;
   userInteracted = true;
-
+  tapOverlay.classList.add("hide");
   music.play().catch(() => {});
   startVideoSequence();
-  tapOverlay.classList.remove("show");
 }
 
 document.body.addEventListener("click", startExperience, { once:true });
@@ -437,49 +417,34 @@ function playMemoryClip(index){
 
   clearTimeout(sequenceTimeout);
 
-  memoryVideo.classList.remove("show");
   memoryVideo.pause();
+  memoryVideo.classList.remove("fade-out");
   memoryVideo.removeAttribute("src");
   memoryVideo.load();
 
-  setTimeout(() => {
-    memoryVideo.src = clip.src;
-    memoryVideo.muted = true;
-    memoryVideo.playbackRate = 0.8;
-    videoCaption.textContent = clip.caption || "Best moments with you 💜";
-    memoryVideo.load();
-  }, 300);
+  memoryVideo.src = clip.src;
+  memoryVideo.muted = true;
+  memoryVideo.playbackRate = 0.8;
+  videoCaption.textContent = clip.caption || "Best moments with you 💜";
+  memoryVideo.load();
 }
 
-memoryVideo.addEventListener("loadedmetadata", () => {
-  let startAt = 0;
-  let endAt = memoryVideo.duration || 6;
+memoryVideo.addEventListener("loadeddata", () => {
+  let clipDuration = memoryVideo.duration || 6;
+  let visibleTime = Math.max(3500, Math.min(clipDuration * 1000, 8000));
 
-  if(endAt > 8){
-    startAt = 0.2;
-    endAt = 8;
-  }
-
-  try{
-    memoryVideo.currentTime = startAt;
-  }catch(e){}
-
-  memoryVideo.play().then(() => {
-    memoryVideo.classList.add("show");
-  }).catch(() => {
-    tapOverlay.classList.add("show");
+  memoryVideo.play().catch(() => {
+    tapOverlay.classList.remove("hide");
   });
 
-  const visibleTime = Math.max(3500, (endAt - startAt) * 1000);
-
   sequenceTimeout = setTimeout(() => {
-    memoryVideo.classList.remove("show");
+    memoryVideo.classList.add("fade-out");
 
     setTimeout(() => {
       memoryVideo.pause();
       currentVideoIndex = (currentVideoIndex + 1) % videoList.length;
       playMemoryClip(currentVideoIndex);
-    }, 1800);
+    }, 1200);
   }, visibleTime);
 });
 
@@ -488,7 +453,6 @@ memoryVideo.addEventListener("error", () => {
   playMemoryClip(currentVideoIndex);
 });
 
-/* button click */
 function foreverClick(){
   loveExplosion();
 
@@ -509,7 +473,6 @@ function foreverClick(){
   }, 5000);
 }
 
-/* heart explosion */
 function loveExplosion(){
   for(let i = 0; i < 45; i++){
     const heart = document.createElement("div");
@@ -524,7 +487,6 @@ function loveExplosion(){
   }
 }
 
-/* audio fade helper */
 function fadeAudio(audio, intervalTime = 80, step = 0.03, callback){
   const fade = setInterval(() => {
     if(audio.volume > step){
@@ -537,7 +499,6 @@ function fadeAudio(audio, intervalTime = 80, step = 0.03, callback){
   }, intervalTime);
 }
 
-/* final reveal */
 function showFinal(){
   document.getElementById("finalReveal").classList.add("show");
 
